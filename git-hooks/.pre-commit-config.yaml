@@ -1,0 +1,108 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+---
+default_language_version:
+  python: python3.8
+exclude: "^$"
+fail_fast: true
+repos:
+  # Simple hooks
+  # ------------
+
+  # pre-commit-hooks: some out-of-the-box hooks for pre-commit.
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: check-added-large-files
+        name: "[file -  check] large file"
+        args: [--maxkb=5000]
+      - id: check-ast
+        name: "[py   -  check] validate python"
+      - id: check-builtin-literals
+        name: "[py   -  check] builtin literals"
+      - id: check-byte-order-marker
+        name: "[file -  check] byte order marker"
+      - id: check-case-conflict
+        name: "[file -  check] case conflict"
+      - id: check-docstring-first
+        name: "[py   -  check] docstring first"
+      - id: check-json
+        name: "[json -  check] validate json"
+      - id: check-merge-conflict
+        name: "[git  -  check] merge conflict"
+      - id: check-symlinks
+        name: "[link -  check] broken symlinks"
+      - id: check-xml
+        name: "[xml  -  check] validate xml"
+      - id: check-yaml
+        name: "[yaml -  check] validate yaml"
+      - id: debug-statements
+        name: "[py   -  check] debug statements"
+      - id: end-of-file-fixer
+        name: "[py   - format] end of files"
+      - id: mixed-line-ending
+        name: "[file - format] mixed line ending"
+        args: [--fix=auto]
+      - id: name-tests-test
+        name: "[py   -  check] name tests test"
+      - id: pretty-format-json
+        name: "[json - format] pretty json"
+        args: [--autofix, --indent=4, --no-sort-keys]
+      - id: trailing-whitespace
+        name: "[file - format] trim trailing whitespace"
+        args: [--markdown-linebreak-ext=md]
+
+  # Linters and auto-formatters
+  # ---------------------------
+
+  # seed-isort-config: Statically populate the known_third_party isort setting.
+  - repo: https://github.com/asottile/seed-isort-config
+    rev: v2.2.0
+    hooks:
+      - id: seed-isort-config
+        name: "[py   - format] seed-isort-config"
+        args: [--settings-path=git-hooks/config]
+
+  # isort: A Python utility / library to sort imports.
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.10.1
+    hooks:
+      - id: isort
+        name: "[py   - format] isort"
+        args: [--settings-path=git-hooks/config]
+
+  # pydocstyle: Check compliance with Python / Numpy docstring conventions.
+  - repo: https://github.com/chewse/pre-commit-mirrors-pydocstyle
+    rev: v2.1.1
+    hooks:
+      - id: pydocstyle
+        name: "[py   -   lint] pydocstyle"
+        args: [--config=git-hooks/config/pydocstyle.ini]
+
+  - repo: https://github.com/python/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        name: "[py   - format] black"
+        args: ["-l 119"]
+
+  # pylint: A linter to check the source code for bugs and code quality.
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v2.7.4
+    hooks:
+      - id: pylint
+        name: "[py   -   lint] pylint"
+        entry: "pylint --fail-under 10.0 --rcfile=git-hooks/config/pylint.ini"
+        language: system
+        types: [python]
+
+  # mypy: A static type checker for Python.
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.960
+    hooks:
+      - id: mypy
+        name: "[py   -   lint] mypy"
+        args:
+          [
+            --config-file=git-hooks/config/mypy.ini
+          ]
