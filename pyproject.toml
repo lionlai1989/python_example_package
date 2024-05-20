@@ -1,42 +1,33 @@
 # `pyproject.toml` tells build tools (like pip and build) what are required to
 # build this project. This tutorial uses `setuptools`.
-[build-system]
-requires = [
-    "pip>=22",
-    "setuptools>=62",
-    "ninja",
-    "cmake>=3.22",
-    "wheel"
-]
-build-backend = "setuptools.build_meta"
-
 # `build-system` gives a list of packages that are required to build this
 # package. What are listed here will only be available during the build, not
 # after it is installed.
-
 # `build-system.build-backend` is the name of Python object that will be used to
 # perform the build. If you were to use a different build system, such as `flit`
 # or `poetry`, those would go here, and the configuration details would be
 # completely different than the `setuptools` configuration described below. See
 # PEP 517 and PEP 518 for background and details.
+[build-system]
+requires = ["pip>=22", "setuptools>=62", "ninja", "cmake>=3.22", "wheel"]
+build-backend = "setuptools.build_meta"
+
 
 [tool.setuptools.packages.find]
-# Read more about Native namespace packages https://packaging.python.org/en/latest/guides/packaging-namespace-packages/#native-namespace-packages
-# The project layout is src-layout (https://setuptools.pypa.io/en/latest/userguide/package_discovery.html#src-layout)
-where = ["src"] # list of folders that contain the packages (["."] by default). It only searches src/ folder for packages. Note that src itself is not a namespacepackage/package.
-
-# If you want src to be a namespacepackage, you can do the following. Read https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration for more information.
+# list of folders that contain the packages (["."] by default). It only searches `src/`
+# folder for packages. Note that `src` itself is not a namespacepackage/package.
+where = ["src"]
+# If you want `src` to be a namespacepackage, you can do the following. Read
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
+# for more information.
 # where = ["."] # list of folders that contain the packages (["."] by default)
 # include = ["src"] # package names should match these glob patterns (["*"] by default)
-
 namespaces = true
 
 [project]
 name = "python_example_package"
 version = "0.0.1"
-authors = [
-  { name="Lion", email="Lion@example.com" },
-]
+authors = [{ name = "Lion", email = "Lion@example.com" }]
 description = "Lion's ultimate Python example package."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -49,8 +40,8 @@ classifiers = [
 # TODO: Add installation directly from github.
 dependencies = [
     "numpy~=1.24.0, !=1.24.2", # `~=1.24.0, !=1.24.2` means >=1.24.0, <1.25.0, !=1.24.2
-    "loguru~=0.6",    # `~=0.6` tilde means >=0.6, ==0.*
-    "pandas~=1.5.3",  # `~=1.5.3` tilde means >=1.5.3, ==1.5.*
+    "loguru~=0.6",             # `~=0.6` tilde means >=0.6, ==0.*
+    "pandas~=1.5.3",           # `~=1.5.3` tilde means >=1.5.3, ==1.5.*
     "rasterio[s3]==1.3.*",
     "pyproj>3.0.0",
 ]
@@ -86,8 +77,8 @@ select = [
     "F",  # pyflakes
     "I",  # isort
     "B",  # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    "UP",  # pyupgrade
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
 ]
 
 [tool.ruff.lint.pycodestyle]
