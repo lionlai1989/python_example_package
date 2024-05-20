@@ -21,8 +21,8 @@ class LazyRecord:
         self.exists = 5
 
     def __getattr__(self, name):
-        """__getattr__ is called each time if hasattr or getattr is called and element
-        doesn't exist."""
+        """__getattr__ is called each time if hasattr or getattr is called and
+        element doesn't exist."""
         print("Call __getattr__")
         value = f"value for {name}"
         setattr(self, name, value)
@@ -125,5 +125,4 @@ class DictionaryRecord:
 
 
 if __name__ == "__main__":
-
     pass

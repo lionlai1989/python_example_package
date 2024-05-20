@@ -1,6 +1,5 @@
-# pyproject.toml tells build tools (like pip and build) what is required to build your project. This
-# tutorial uses setuptools, so open pyproject.toml and enter the following content:
-
+# `pyproject.toml` tells build tools (like pip and build) what are required to
+# build this project. This tutorial uses `setuptools`.
 [build-system]
 requires = [
     "pip>=22",
@@ -11,14 +10,15 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
-# build-system.requires gives a list of packages that are needed to build your package. Listing
-# something here will only make it available during the build, not after it is installed.
+# `build-system` gives a list of packages that are required to build this
+# package. What are listed here will only be available during the build, not
+# after it is installed.
 
-# build-system.build-backend is the name of Python object that will be used to perform the build. If
-# you were to use a different build system, such as flit or poetry, those would go here, and the
-# configuration details would be completely different than the setuptools configuration described
-# below.
-# See PEP 517 and PEP 518 for background and details.
+# `build-system.build-backend` is the name of Python object that will be used to
+# perform the build. If you were to use a different build system, such as `flit`
+# or `poetry`, those would go here, and the configuration details would be
+# completely different than the `setuptools` configuration described below. See
+# PEP 517 and PEP 518 for background and details.
 
 [tool.setuptools.packages.find]
 # Read more about Native namespace packages https://packaging.python.org/en/latest/guides/packaging-namespace-packages/#native-namespace-packages
@@ -56,9 +56,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = [
-    "pre-commit", "black", "mypy", "pydocstyle", "ruff"
-]
+dev = ["mypy", "ruff"]
 mytest = ["pytest", "pytest-cov", "psutil"]
 interactive = ["jupyter", "ipykernel", "notebook", "jupyterlab"]
 
@@ -68,3 +66,29 @@ interactive = ["jupyter", "ipykernel", "notebook", "jupyterlab"]
 [project.scripts]
 examplecmd = "zionnamespacepackage.firstpackage.main:main"
 anothercmd = "zionnamespacepackage.secondpackage.main:main"
+
+## mypy configuration
+[tool.mypy]
+strict = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+
+## ruff configuration
+[tool.ruff]
+fix = true
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 100

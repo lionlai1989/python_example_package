@@ -81,7 +81,6 @@ def division_with_error(a: int, b: int):
 
 
 def run(args: Optional[List[str]]) -> None:
-
     typing_showcase(len, {"1": "2"}, (1, 3), [(1, 2), (3, 4)], range(3))
 
     try:
@@ -104,9 +103,7 @@ def main() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--gcp-dir", dest="gcp_dir", type=Path, required=True)
-    parser.add_argument(
-        "--out-efs-dir", type=Path, required=True
-    )  # dest is not needed.
+    parser.add_argument("--out-efs-dir", type=Path, required=True)  # dest is not needed.
     parser.add_argument(
         "--output-resolution",
         type=float,
@@ -125,8 +122,7 @@ def main() -> None:
     run(parser.parse_args())
 
     logger.info(
-        f"\n\nstereo_processing finished in"
-        f" {(time.time() - start_time) / 60:.1f} minutes.\n"
+        f"\n\nstereo_processing finished in" f" {(time.time() - start_time) / 60:.1f} minutes.\n"
     )
 
 

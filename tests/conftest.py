@@ -1,4 +1,5 @@
 """It defines useful pytest fixture for testing."""
+
 import numpy as np
 import pytest
 from rasterio import Affine, MemoryFile

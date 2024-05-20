@@ -2,12 +2,14 @@
 # -*- coding:utf-8 -*-
 
 """A command line entry point file."""
+
 import os
 import argparse
 import time
 from pathlib import Path
 import subprocess
 import sys
+
 # from typing import Any, Callable, Iterable, List, Optional, Sequence, Tuple, Type, Union
 from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
 import importlib
@@ -18,6 +20,7 @@ import inspect
 # add the bin folder to system path
 
 import sysconfig
+
 print(sys.path)
 print(sysconfig.get_paths()["purelib"])
 module_rootpath = sysconfig.get_paths()["purelib"]
@@ -26,6 +29,7 @@ module_rootpath = sysconfig.get_paths()["purelib"]
 # parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # bin_dir = os.path.join(parent_dir, 'bin')
 # os.environ['PATH'] = bin_dir + os.pathsep + os.environ['PATH']
+
 
 def run_command(cmd, env=os.environ, timeout=None, shell=False):
     """
@@ -45,9 +49,11 @@ def run_command(cmd, env=os.environ, timeout=None, shell=False):
     print("\nRUN: %s" % cmd)
     if not isinstance(cmd, list) and not shell:
         cmd = cmd.split()
-    subprocess.run(cmd, shell=shell, stdout=sys.stdout, stderr=sys.stderr,
-                   env=env, timeout=timeout, check=True)
-    
+    subprocess.run(
+        cmd, shell=shell, stdout=sys.stdout, stderr=sys.stderr, env=env, timeout=timeout, check=True
+    )
+
+
 def typing_showcase(
     fn: Callable[..., Any],
     a_dict: Dict[Any, Any],
@@ -119,7 +125,6 @@ def division_with_error(a: int, b: int):
 
 
 def run(args: Optional[List[str]]) -> None:
-
     typing_showcase(len, {"1": "2"}, (1, 3), [(1, 2), (3, 4)], range(3))
 
     try:
@@ -144,9 +149,7 @@ def main() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--gcp-dir", dest="gcp_dir", type=Path, required=True)
-    parser.add_argument(
-        "--out-efs-dir", type=Path, required=True
-    )  # dest is not needed.
+    parser.add_argument("--out-efs-dir", type=Path, required=True)  # dest is not needed.
     parser.add_argument(
         "--output-resolution",
         type=float,
@@ -165,8 +168,7 @@ def main() -> None:
     run(parser.parse_args())
 
     logger.info(
-        f"\n\nstereo_processing finished in"
-        f" {(time.time() - start_time) / 60:.1f} minutes.\n"
+        f"\n\nstereo_processing finished in" f" {(time.time() - start_time) / 60:.1f} minutes.\n"
     )
 
 

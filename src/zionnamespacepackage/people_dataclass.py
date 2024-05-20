@@ -1,15 +1,15 @@
-import pandas as pd
-from typing import List
 from dataclasses import dataclass, fields
+
+import pandas as pd
 
 
 @dataclass
 class People:
     Name: str
     Age: int
-    Score: List[int]
-    Location: List[str]
-    Skills: List[str]
+    Score: list[int]
+    Location: list[str]
+    Skills: list[str]
 
 
 def write_people_df_to_csv(df, path):

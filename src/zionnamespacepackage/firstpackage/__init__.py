@@ -2,6 +2,7 @@
 put here. Print firstpackage.__version__ will get the output "0.1.0"."""
 
 import subprocess, os, sysconfig, sys
+
 src_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-os.environ['PATH'] = src_dir + os.pathsep + os.environ['PATH']
+os.environ["PATH"] = src_dir + os.pathsep + os.environ["PATH"]
 subprocess.run("helloworld", env=os.environ)

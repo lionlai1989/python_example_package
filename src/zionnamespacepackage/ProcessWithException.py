@@ -1,7 +1,10 @@
-"""It uses multiprocessing and queue to create a framework which in theory can speed up your program."""
+"""It uses multiprocessing and queue to create a framework which in theory can
+speed up your program ."""
+
 import multiprocessing
 import traceback
 from typing import Any, Union
+
 
 class ProcessWithException(multiprocessing.Process):
     def __init__(self, *args: Any, **kwargs: Any) -> None:

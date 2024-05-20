@@ -23,7 +23,10 @@
 
 Lion's Example Python Package is an open-source Python package designed to help developers gain a fundamental understanding of how Python projects work. It covers various topics, ranging from the basics to advanced concepts, which can save a considerable amount of research time.
 
-## Description
+## Project Structure
+First and foremost, this project adopts the src-layout, which offers several
+advantages over the traditional flat layout.
+
 This package covers the following topics:
 - Namespace package
 - Pre-commit hook
@@ -36,7 +39,7 @@ Theoretically, this package is self-contained, and it downloads all the required
 ### Install
 - Activate a Python virtual environment and update `pip`:
 ```
-python3 -m venv venv_python_example && source venv_python_example/bin/activate && python3 -m pip install --upgrade pip
+python3 -m venv venv_python_example && source venv_python_example/bin/activate && python3 -m pip install --upgrade pip setuptools wheel
 ```
 - Install from source or:
 ```
@@ -84,6 +87,10 @@ To build a wheel, run the following command:
 python3 -m pip install --upgrade wheel
 python3 setup.py sdist bdist_wheel
 ```
+
+#### Working in VS Code
+- install `ruff` extension.
+- use `rewrap` extension. do not change the default line length of this extension.
 
 #### Run pre-commit
 Run `pre-commit run --all-files` in architect_blueprint.
