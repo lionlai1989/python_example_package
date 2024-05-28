@@ -18,12 +18,10 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Lion's Example Python Package
+# Example Python Package
 
-Lion's Example Python Package is an open-source Python package designed to help
-developers gain a fundamental understanding of how Python projects work. It covers
-various topics, ranging from the basics to advanced concepts, which can save a
-considerable amount of research time.
+This repository provides an example of a modern Python package. It demonstrates best
+practices for structuring, documenting, and distributing Python packages.
 
 ## Project Structure
 
@@ -37,61 +35,89 @@ Secondly, This project has a
 called `zionnamespacepackage` and three packages, `firstpackage`, `secondpackage`, and
 `effectivepython`.
 
-<!-- -   Namespace package
--   Pre-commit hook
--   Automatically build and install a C++ library and executable in the system path.
--   Use ruff as the main linter. **(NOTE: It's not done yet.)** -->
+## Using the Package
 
-## Install
+This section guides you through the setup and use of this package.
 
-This package is self-contained, and it downloads all the dependencies and required
-packages automatically. Therefore, there is no need to install any external dependencies
-manually.
+### Setup the Virtual Environment
 
--   Create and activate a Python virtual environment and update `pip`:
+We need to
+[always use a virtual environment](https://realpython.com/python-virtual-environments-a-primer/).
+While `pip` alone is sufficient to install from pre-built binary archives, up-to-date
+copies of the `setuptools` and `wheel` projects are useful to ensure us can also install
+from source archives. Actually, updating `pip` `setuptools` and `wheel` may not be
+necessary because a modern python package defines all prerequites in the section of
+`[build-system]` of `pyproject.toml`.
 
-```
-python3.10 -m venv venv_python_example \
-&& source venv_python_example/bin/activate \
+```shell
+python3.10 -m venv venv_template_project \
+&& source venv_template_project/bin/activate \
 && python3 -m pip install --upgrade pip setuptools wheel
 ```
 
--   Install from source:
+### Installing the Package
+
+#### Install from GitHub Directly
+
+To install directly from a specific branch on GitHub:
 
 ```
-python3 -m pip install "git+ssh://git@github.com/lionlai1989/python_example_package.git"
+python3 -m pip install git+ssh://github.com/lionlai1989/python_example_package.git@<branch_name>
 ```
 
--   (TODO) Install from wheel:
+<branch_name>: Specify the branch from which to install. `pip` will handle the
+downloading and building of the package.
 
--   (Optional) Clone this repo recursively and install from source:
+#### Install from the Python Package Index (PyPI)
 
+_This method is currently not supported._
+
+If the package is available on PyPI, you can install it using:
+
+```shell
+python3 -m pip install python_example_package
 ```
-git clone git@github.com:lionlai1989/python_example_package.git --recursive
-python3 -m pip install .
+
+#### Install from wheel
+
+_This method is currently not supported._
+
+#### Git Clone and Install from Source
+
+While cloning the repository and installing from source is possible, it generally
+defeats the purpose of creating a distributable Python package. _This method is
+typically **not recommended** unless necessary for development to the package itself_:
+
+```shell
+git clone git@github.com/lionlai1989/python_example_package.git \
+&& cd template-python-package \
+&& python3 -m pip install .
 ```
 
--   Verify installation:  
-    After the installation is completed, you can run `examplecmd` to verify the
-    installation.
+## Developing the Package
 
-## Develope
+This section outlines the steps for developing the template package.
 
-While developing a Python package, we need to install this package in editable mode.
+### Setup the Virtual Environment
 
--   Clone this repo recursively, activate a Python virtual environment and update `pip`:
+Again, set up a virtual environment to isolate package dependencies.
 
-```
-git clone git@github.com:lionlai1989/my_example_python_package.git --recursive
-python3.10 -m venv venv_python_example \
-&& source venv_python_example/bin/activate \
+```shell
+git clone git@github.com:lionlai1989/my_example_python_package.git --recursive \
+&& python3.10 -m venv venv_template_project \
+&& source venv_template_project/bin/activate \
 && python3 -m pip install --upgrade pip setuptools wheel
 ```
 
--   Install in editable mode:
+### Setup the Development Environment
 
-```
-python3 -m pip install -e .
+This includes installing the project in
+[editable mode](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)
+along with optional dependencies for development and testing as specified in
+`pyproject.toml`.
+
+```shell
+python3 -m pip install -e '.[dev,test]'
 ```
 
 Use `CMAKE_RUNTIME_OUTPUT_DIRECTORY` in setup.py to make executable show up in the path.
@@ -118,17 +144,94 @@ python3 -m pip install --upgrade wheel
 python3 setup.py sdist bdist_wheel
 ```
 
-### Working in VS Code
+## Testing the Package
+
+The `tests/` directory mirrors the structure in `src/`. We use `pytest` along with
+coverage reporting for our tests:
+
+```shell
+pytest tests --cov=.
+```
+
+If the setup and code are correct, you should see an output similar to:
+
+```text
+================================================= 25 passed in 0.24s ==================================================
+```
+
+## Linting and Formatting
+
+For linting and formatting, we use ruff. This tool helps ensure that our codebase
+maintains a consistent style.
+
+```shell
+ruff check --fix
+ruff format
+```
+
+Ideally, it would be nicer to include linting in CI.
+
+## Working in VS Code
 
 -   install `ruff` extension.
 -   use `rewrap` extension. do not change the default line length of this extension.
 
-### Run pre-commit
+## Run pre-commit
 
 Run `pre-commit run --all-files` in architect_blueprint. Install
 `sudo apt install shellcheck`
 
-### Document
+## Building a Docker Image from Dockerfile
+
+Building a Docker image can help us to test this Python template package in a consistent
+environment.
+
+```
+docker build -t python-template -f Dockerfile .
+```
+
+Once the Docker image is built, we can run it as a container to execute all tests
+located in the `tests/` directory using `pytest` with the following command:
+
+```
+docker run --rm python-template
+```
+
+The expected output should indicate all tests passing as follows:
+
+```
+============================== 25 passed in 0.13s ==============================
+```
+
+## GitHub CI (and CD?)
+
+Continuous Integration (CI) serves as the gatekeeper for this repository. It
+automatically running tests on every push and pull request.
+
+We would recommend addressing any failures in the CI process before proceeding with your
+changes.
+
+Note that Homee AI does not use GitHub Enterprise; therefore, pull requests will not be
+automatically blocked if CI fails.
+
+This package is primarily designed as a Python library, which makes Continuous
+Deployment (CD) less relevant. However, if you have ideas for CD in this context, please
+initiate a discussion. Your contributions are welcome!
+
+## Building and Publishing the Package
+
+To be dicussed.
+
+References: Source distribution format:
+https://packaging.python.org/en/latest/specifications/source-distribution-format/#source-distribution-format
+
+Binary distribution format:
+https://packaging.python.org/en/latest/specifications/binary-distribution-format/
+
+https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
+https://realpython.com/pypi-publish-python-package/
+
+## Document
 
 The table of contents of this file can be regenerated with the following steps.
 
