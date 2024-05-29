@@ -20,8 +20,7 @@
 
 # Example Python Package
 
-This repository provides an example of a modern Python package. It demonstrates best
-practices for structuring, documenting, and distributing Python packages.
+This repository provides an example of a modern Python package.
 
 ## Project Structure
 
@@ -45,9 +44,11 @@ We need to
 [always use a virtual environment](https://realpython.com/python-virtual-environments-a-primer/).
 While `pip` alone is sufficient to install from pre-built binary archives, up-to-date
 copies of the `setuptools` and `wheel` projects are useful to ensure us can also install
-from source archives. Actually, updating `pip` `setuptools` and `wheel` may not be
-necessary because a modern python package defines all prerequites in the section of
-`[build-system]` of `pyproject.toml`.
+from source archives.
+
+However, updating `pip`, `setuptools`, and `wheel` may not be necessary, as a modern
+Python package defines all prerequisites in the `[build-system]` section of
+`pyproject.toml`.
 
 ```shell
 python3.10 -m venv venv_template_project \
@@ -103,7 +104,7 @@ This section outlines the steps for developing the template package.
 Again, set up a virtual environment to isolate package dependencies.
 
 ```shell
-git clone git@github.com:lionlai1989/my_example_python_package.git --recursive \
+git clone git@github.com:lionlai1989/python_example_package.git --recursive \
 && python3.10 -m venv venv_template_project \
 && source venv_template_project/bin/activate \
 && python3 -m pip install --upgrade pip setuptools wheel
@@ -120,8 +121,8 @@ along with optional dependencies for development and testing as specified in
 python3 -m pip install -e '.[dev,test]'
 ```
 
-Use `CMAKE_RUNTIME_OUTPUT_DIRECTORY` in setup.py to make executable show up in the path.
-This code can only work in normal mode, but not in editable mode.
+Use `CMAKE_RUNTIME_OUTPUT_DIRECTORY` in `setup.py` to make executable show up in the
+path. This code can only work in normal mode, but not in editable mode.
 
 ## Generate distribution archives for the package.
 
@@ -143,6 +144,16 @@ To build a wheel, run the following command:
 python3 -m pip install --upgrade wheel
 python3 setup.py sdist bdist_wheel
 ```
+
+References: Source distribution format:
+https://packaging.python.org/en/latest/specifications/source-distribution-format/#source-distribution-format
+
+Binary distribution format:
+https://packaging.python.org/en/latest/specifications/binary-distribution-format/
+
+https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
+https://realpython.com/pypi-publish-python-package/
+
 
 ## Testing the Package
 
@@ -210,26 +221,6 @@ automatically running tests on every push and pull request.
 
 We would recommend addressing any failures in the CI process before proceeding with your
 changes.
-
-Note that Homee AI does not use GitHub Enterprise; therefore, pull requests will not be
-automatically blocked if CI fails.
-
-This package is primarily designed as a Python library, which makes Continuous
-Deployment (CD) less relevant. However, if you have ideas for CD in this context, please
-initiate a discussion. Your contributions are welcome!
-
-## Building and Publishing the Package
-
-To be dicussed.
-
-References: Source distribution format:
-https://packaging.python.org/en/latest/specifications/source-distribution-format/#source-distribution-format
-
-Binary distribution format:
-https://packaging.python.org/en/latest/specifications/binary-distribution-format/
-
-https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
-https://realpython.com/pypi-publish-python-package/
 
 ## Document
 
