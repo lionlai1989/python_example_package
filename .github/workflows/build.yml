@@ -2,11 +2,8 @@ name: Build and Publish Package
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -30,8 +27,14 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
 
-    - name: Upload distribution to GitHub
-      uses: actions/upload-artifact@v3
+    - name: Create tar.gz file
+      run: |
+        tar -czvf my_package.tar.gz dist/
+
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
       with:
-        name: dist
-        path: dist/
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./my_package.tar.gz
+        asset_name: my_package.tar.gz
+        asset_content_type: application/gzip
