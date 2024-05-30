@@ -81,7 +81,11 @@ python3 -m pip install python_example_package
 
 #### Install from wheel
 
-_This method is currently not supported._
+```
+pip install https://github.com/lionlai1989/python_example_package/archive/refs/tags/v0.0.1.tar.gz
+pip install https://github.com/lionlai1989/python_example_package/archive/refs/tags/v0.0.1.zip
+
+```
 
 #### Git Clone and Install from Source
 
